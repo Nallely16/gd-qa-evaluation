@@ -1,3 +1,19 @@
+<template>
+  <UAuthForm :fields="fields" :schema="schema" title="Welcome back" icon="i-lucide-lock" @submit="onSubmit">
+    <template #description>
+      Don't have an account? <ULink to="/signup" class="text-primary font-medium">Sign up</ULink>.
+    </template>
+
+    <template #password-hint>
+      <ULink to="/" class="text-primary font-medium" tabindex="-1">Forgot password?</ULink>
+    </template>
+
+    <template #footer>
+      By signing in, you agree to our <ULink to="/" class="text-primary font-medium">Terms of Service</ULink>.
+    </template>
+  </UAuthForm>
+</template>
+
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
@@ -35,19 +51,3 @@ function onSubmit(payload: FormSubmitEvent<Schema>) {
   console.log('Submitted', payload)
 }
 </script>
-
-<template>
-  <UAuthForm :fields="fields" :schema="schema" title="Welcome back" icon="i-lucide-lock" @submit="onSubmit">
-    <template #description>
-      Don't have an account? <ULink to="/signup" class="text-primary font-medium">Sign up</ULink>.
-    </template>
-
-    <template #password-hint>
-      <ULink to="/" class="text-primary font-medium" tabindex="-1">Forgot password?</ULink>
-    </template>
-
-    <template #footer>
-      By signing in, you agree to our <ULink to="/" class="text-primary font-medium">Terms of Service</ULink>.
-    </template>
-  </UAuthForm>
-</template>

@@ -3,7 +3,7 @@ import sequelize from "../sequelize";
 
 interface UserRow {
     id: number;
-    name: string;
+    username: string;
     email: string;
     password: string;
     createdAt?: Date;
@@ -13,7 +13,7 @@ interface UserRow {
 
 export class UserSequelize extends Model<UserRow, Omit<UserRow, 'id'>> {
     declare id: number;
-    declare name: string;
+    declare username: string;
     declare email: string;
     declare password: string;
     declare readonly createdAt: Date;
@@ -28,7 +28,7 @@ UserSequelize.init({
         allowNull: false,
         autoIncrement: true
     },
-    name: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false
     },
