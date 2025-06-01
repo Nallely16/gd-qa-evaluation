@@ -17,7 +17,12 @@
               : 'text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-800 dark:hover:text-white'
           ]"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-user-icon lucide-user">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
           <span>Perfil</span>
         </button>
         <button
@@ -29,7 +34,13 @@
               : 'text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-800 dark:hover:text-white'
           ]"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock-keyhole-icon lucide-lock-keyhole"><circle cx="12" cy="16" r="1"/><rect x="3" y="10" width="18" height="12" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-lock-keyhole-icon lucide-lock-keyhole">
+            <circle cx="12" cy="16" r="1" />
+            <rect x="3" y="10" width="18" height="12" rx="2" />
+            <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+          </svg>
           <span>Cambiar contraseña</span>
         </button>
       </nav>
@@ -48,32 +59,31 @@
         </p>
       </div>
 
-      <div class="border border-gray-300 dark:border-slate-700 rounded-lg p-8 w-full max-w-2xl bg-white/60 dark:bg-slate-900/20 backdrop-blur-sm space-y-6">
+      <div
+        class="border border-gray-300 dark:border-slate-700 rounded-lg p-8 w-full max-w-2xl bg-white/60 dark:bg-slate-900/20 backdrop-blur-sm space-y-6">
         <!-- Perfil -->
         <div v-if="activeTab === 'profile'" class="space-y-4 text-left">
           <div class="flex items-center space-x-4">
-            <div class="flex items-center justify-center w-16 h-16 rounded-full border border-blue-400 dark:border-blue-500 text-blue-500 font-bold text-xl">
-              {{ homeStore.user.name.charAt(0).toUpperCase() }}
+            <div
+              class="flex items-center justify-center w-16 h-16 rounded-full border border-blue-400 dark:border-blue-500 text-blue-500 font-bold text-xl">
+              {{ userInitial }}
             </div>
             <div>
-              <p class="font-medium text-gray-800 dark:text-gray-100">{{ homeStore.user.name }}</p>
-              <p class="text-gray-500 dark:text-slate-400 text-sm">{{ homeStore.user.email }}</p>
+              <p class="font-medium text-gray-800 dark:text-gray-100">{{ user.name }}</p>
+              <p class="text-gray-500 dark:text-slate-400 text-sm">{{ user.email }}</p>
             </div>
           </div>
 
           <hr class="border-gray-300 dark:border-slate-700" />
 
-          <UForm :state="homeStore.profileForm" @submit.prevent="updateName" class="space-y-4">
+          <UForm :state="profileForm" @submit.prevent="updateName" class="space-y-4">
             <UFormField label="Nombre:">
-              <UInput v-model="homeStore.profileForm.name" placeholder="Tu nombre" />
+              <UInput v-model="profileForm.name" placeholder="Tu nombre" />
             </UFormField>
 
             <UFormField label="Correo electrónico:">
-              <UInput
-                v-model="homeStore.user.email"
-                readonly
-                class="bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400"
-              />
+              <UInput v-model="user.email" readonly
+                class="bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400" />
             </UFormField>
 
             <div class="flex justify-end">
@@ -85,11 +95,15 @@
         <!-- Cambiar contraseña -->
         <div v-else-if="activeTab === 'password'" class="space-y-4">
           <UForm :state="passwordForm" @submit.prevent="updatePassword" class="space-y-4">
+            <UFormField label="Contraseña actual:">
+              <UInput type="password" v-model="passwordForm.currentPassword" placeholder="Contraseña actual" />
+            </UFormField>
+
             <UFormField label="Nueva contraseña:">
               <UInput type="password" v-model="passwordForm.newPassword" placeholder="Nueva contraseña" />
             </UFormField>
 
-            <UFormField label="Confirmar contraseña:">
+            <UFormField label="Confirmar contraseña:" :error="confirmPasswordError">
               <UInput type="password" v-model="passwordForm.confirmPassword" placeholder="Repite la contraseña" />
             </UFormField>
 
@@ -98,68 +112,86 @@
             </div>
           </UForm>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useHomeStore } from '~/stores/home'
 import { useToast } from '#imports'
 
 definePageMeta({
-  layout: 'profile',
+  layout: 'home',
   middleware: 'auth'
 })
 
+const activeTab = ref<'profile' | 'password'>('profile')
+const passwordForm = ref({
+  currentPassword: '',
+  newPassword: '',
+  confirmPassword: ''
+})
+const confirmPasswordError = ref('')
+
 const homeStore = useHomeStore()
 const toast = useToast()
-const activeTab = ref<'profile' | 'password'>('profile')
+
+const user = computed(() => homeStore.user)
+const profileForm = computed(() => homeStore.profileForm)
+const userInitial = computed(() => homeStore.user.name.charAt(0).toUpperCase())
 
 onMounted(() => {
   homeStore.loadUserFromLocalStorage()
 })
 
+watch(() => [passwordForm.value.newPassword, passwordForm.value.confirmPassword],([newPassword, confirmPassword]) => {
+    confirmPasswordError.value =
+      confirmPassword && newPassword !== confirmPassword
+        ? 'Las contraseñas no coinciden.'
+        : ''
+  }
+)
+
 const updateName = async () => {
   await homeStore.updateUserName()
-  toast.add({
-    title: '¡Actualizado!',
-    description: 'Tu nombre ha sido actualizado correctamente.',
-    icon: 'i-heroicons-check-circle'
-  })
 }
 
-const passwordForm = ref({
-  newPassword: '',
-  confirmPassword: ''
-})
-
 const updatePassword = async () => {
-  if (!passwordForm.value.newPassword || !passwordForm.value.confirmPassword) {
+  const { currentPassword, newPassword, confirmPassword } = passwordForm.value
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
     toast.add({
       title: 'Error',
-      description: 'Debes llenar ambos campos de contraseña.',
+      description: 'Debes llenar todos los campos de contraseña.',
       icon: 'i-heroicons-exclamation-circle'
     })
     return
   }
 
-  if (passwordForm.value.newPassword !== passwordForm.value.confirmPassword) {
-    toast.add({
-      title: 'Error',
-      description: 'Las contraseñas no coinciden.',
-      icon: 'i-heroicons-exclamation-circle'
-    })
+  if (confirmPasswordError.value) {
     return
   }
 
-  passwordForm.value.newPassword = ''
-  passwordForm.value.confirmPassword = ''
-  toast.add({
-    title: '¡Contraseña actualizada!',
-    description: 'Tu contraseña se actualizó correctamente.',
-    icon: 'i-heroicons-check-circle'
-  })
+  try {
+    await homeStore.updatePassword(user.value.email, currentPassword, newPassword)
+    toast.add({
+      title: '¡Contraseña actualizada!',
+      description: 'Tu contraseña se actualizó correctamente.',
+      icon: 'i-heroicons-check-circle'
+    })
+
+    passwordForm.value.currentPassword = ''
+    passwordForm.value.newPassword = ''
+    passwordForm.value.confirmPassword = ''
+  } catch (error) {
+    toast.add({
+      title: 'Error',
+      description: 'Ocurrió un error al actualizar la contraseña.',
+      icon: 'i-heroicons-exclamation-circle'
+    })
+  }
 }
 </script>

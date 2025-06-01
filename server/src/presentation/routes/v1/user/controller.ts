@@ -40,8 +40,12 @@ export class UserController {
     }
 
     public updatePassword = async (c: Context) => {
-        const { email, currentPassword, newPassword } = await c.req.json();
-        await this.userRepositoryImpl.updatePassword(email, currentPassword, newPassword);
-        return c.json({ message: "Password updated successfully!" });
+        try {
+            const { email, currentPassword, newPassword } = await c.req.json();
+            await this.userRepositoryImpl.updatePassword(email, currentPassword, newPassword);
+            return c.json({ message: 'Actualizado correctamente!' }, 200);
+        } catch (error) {
+            return c.json({ error }, 500);
+        }
     }
 }

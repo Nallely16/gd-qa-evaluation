@@ -21,7 +21,9 @@ export const useLoginStore = defineStore('loginStore', {
 
         localStorage.setItem('user', encryptData(response.data.user))
         localStorage.setItem('sessionStart', encryptData({ value: Date.now().toString() }))
-
+        const homeStore = useHomeStore()
+        homeStore.loadUserFromLocalStorage()
+        
         this.user = {
           username: response.data.user.username,
           email: response.data.user.email
@@ -44,20 +46,11 @@ export const useLoginStore = defineStore('loginStore', {
     },
 
     logout() {
-      const toast = useToast()
       const authToken = useCookie('auth_token')
       authToken.value = null
       localStorage.removeItem('user')
       localStorage.removeItem('sessionStart')
-
       this.user = null
-
-      toast.add({
-        title: 'Sesión cerrada',
-        description: 'Has cerrado sesión correctamente.',
-        icon: 'i-heroicons-check-circle'
-      })
-
       navigateTo('/')
     },
 

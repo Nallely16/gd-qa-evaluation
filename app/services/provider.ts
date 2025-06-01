@@ -34,6 +34,6 @@ export const provider = {
   },
   updatePassword(email: string, currentPassword: string, newPassword: string) {
     const axios = createAxios()
-    return axios.put('/user/password', { email, currentPassword, newPassword })
+    return axios.put('/user/profile-password', { email, currentPassword, newPassword })
   }
 }

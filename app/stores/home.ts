@@ -58,6 +58,19 @@ export const useHomeStore = defineStore('homeStore', {
           icon: 'i-heroicons-exclamation-circle'
         })
       }
+    },
+
+    async updatePassword(email: string, currentPassword: string, newPassword: string) {
+      try {
+        await provider.updatePassword(email, currentPassword, newPassword)
+        this.message = 'Contraseña actualizada correctamente.'
+        this.error = ''
+      } catch {
+        this.message = ''
+        this.error = 'Error al actualizar la contraseña.'
+        throw new Error('No se pudo actualizar la contraseña.')
+      }
     }
+
   }
 })

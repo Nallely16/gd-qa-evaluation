@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
+import { useLoginStore } from '~/stores/login'
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { useLoginStore } from '~/stores/login'
 
 definePageMeta({
   layout: 'auth'
@@ -42,8 +42,8 @@ const fields = [
   },
   {
     name: 'password',
-    label: 'Password',
     type: 'password' as const,
+    label: 'Password',
     placeholder: 'Enter your password'
   }
 ]
@@ -55,7 +55,7 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>
 
-async function onSubmit(payload: FormSubmitEvent<Schema>) {
+const onSubmit = async (payload: FormSubmitEvent<Schema>) => {
   const { email, password } = payload.data
   await loginStore.login(email, password)
 }

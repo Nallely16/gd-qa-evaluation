@@ -8,7 +8,7 @@ export class UserRoutes {
         router.post('/', controller.registerOrUpdate);
         router.post('/credentials', controller.getCredentials);
         router.put('/profile', controller.changeUsername);
-        router.put('/password', controller.updatePassword);
+        router.put('/profile-password', controller.updatePassword);
         return router;
     }
 }
