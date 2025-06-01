@@ -63,6 +63,9 @@ Esto ejecutará:
 
 - `dev:server`: El servidor backend Hono (`bun run server/src/app.ts`).
 - `dev:frontend`: El servidor de desarrollo de Nuxt (`nuxt dev`).
+  
+ ![image](https://github.com/user-attachments/assets/91be2eeb-b11f-4c8f-9d70-24f173e0914b)
+
 
 ## ⚙️ Scripts disponibles
 
@@ -79,19 +82,7 @@ Esto ejecutará:
 - **Eslint y estilo:** El proyecto incluye ESLint y TailwindCSS para estilo y calidad de código.
 - **Plugins Nuxt:** Se incluyen módulos como `@nuxt/content`, `@nuxt/fonts`, `@nuxt/image`, y `@nuxt/ui-pro` para enriquecer la experiencia de desarrollo.
 
-## 🛠️ Construcción para producción
-
-```bash
-bun run build
-```
-
-Luego, para previsualizar el sitio generado:
-
-```bash
-bun run preview
-```
-
-## 🧪 Escenarios de pruebas end to end
+## 🧪 Escenarios de pruebas
 
 Como parte de la verificación de calidad, se deben preparar los siguientes escenarios para pruebas **end to end**:
 
