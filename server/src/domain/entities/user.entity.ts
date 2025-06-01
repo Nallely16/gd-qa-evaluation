@@ -2,6 +2,7 @@ import { UserSequelize } from "../../infraestructure/database/models/User";
 
 export default class UserEntity {
     constructor(
+        public uuid: string,
         public username: string,
         public email: string,
         public password: string,
@@ -13,6 +14,7 @@ export default class UserEntity {
 
     static fromRow(user: UserSequelize): UserEntity {
         return new UserEntity(
+            user.uuid,
             user.username,
             user.email,
             user.password,

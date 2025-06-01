@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
     '@nuxt/test-utils',
-    '@nuxt/ui-pro'
+    '@nuxt/ui-pro',
+    '@pinia/nuxt'
   ],
   css: ['~/assets/css/main.css'],
   uiPro: {
@@ -42,7 +43,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3001'
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3002'
     }
   }
 })

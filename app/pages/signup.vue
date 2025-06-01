@@ -20,6 +20,8 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 import { ref } from 'vue'
 import { navigateTo } from '#app'
 import * as z from 'zod'
+import { useCookie } from '#app'
+import { encryptData } from '~/shared/utils'
 
 definePageMeta({
   layout: 'auth'
@@ -53,30 +55,32 @@ const schema = z.object({
 type Schema = z.output<typeof schema>
 
 async function onSubmit(payload: FormSubmitEvent<Schema>) {
-  const user = new UserExternal(payload.data.username, payload.data.email, payload.data.password)
+  const { username, email, password } = payload.data;
+  const user = new UserExternal(username, email, password);
   try {
-    await provider.saveUser(user)
+    await provider.saveUser(user);
+    const response = await provider.getCredentials(email, password);
+
+    const authToken = useCookie('auth_token');
+    authToken.value = response.data.token;
+
+    localStorage.setItem('user', encryptData(response.data.user))
+    localStorage.setItem('sessionStart', encryptData({ value: Date.now().toString() }))
+
     toast.add({
       title: '¡Registro exitoso!',
-      description: 'Se inició sesión correctamente.',
+      description: 'Has iniciado sesión correctamente.',
       icon: 'i-heroicons-check-circle'
-    })
+    });
 
-    // Limpiar los datos del formulario
-    formData.value = {
-      username: '',
-      email: '',
-      password: ''
-    }
-
-    // Redirigir a home
-    navigateTo('/home')
+    await navigateTo('/home');
   } catch (error: any) {
+    console.error('Error en registro/login:', error);
     toast.add({
       title: '¡Ups! Algo salió mal.',
       description: 'Ocurrió un problema con tu solicitud.',
       icon: 'i-heroicons-exclamation-circle'
-    })
+    });
   }
 }
 </script>

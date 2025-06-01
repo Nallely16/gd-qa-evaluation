@@ -24,4 +24,16 @@ export const provider = {
     const axios = createAxios()
     return axios.post('/user', user.toJSON())
   },
+  getCredentials(email: string, password: string) {
+    const axios = createAxios()
+    return axios.post('/user/credentials', { email, password })
+  },
+  changeUsername(username: string, email: string) { 
+    const axios = createAxios()
+    return axios.put('/user/profile', { username, email })
+  },
+  updatePassword(email: string, currentPassword: string, newPassword: string) {
+    const axios = createAxios()
+    return axios.put('/user/password', { email, currentPassword, newPassword })
+  }
 }

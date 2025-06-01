@@ -6,6 +6,9 @@ export class UserRoutes {
         const router = new Hono();
         const controller = new UserController;
         router.post('/', controller.registerOrUpdate);
+        router.post('/credentials', controller.getCredentials);
+        router.put('/profile', controller.changeUsername);
+        router.put('/password', controller.updatePassword);
         return router;
     }
 }
