@@ -1,3 +1,10 @@
+## Documentación y Video de Prueba
+
+- [Documentos con los escenarios de pruebas y Jest](https://github.com/kewlis/gd-qa-evaluation/blob/c5fe9c67a9b0ed16eff5283c35f6ae75e98c7721/Pruebas%20Jest%20-%20Escenarios.docx) 
+
+- [Video de la prueba Cypress](https://github.com/kewlis/gd-qa-evaluation/blob/c5fe9c67a9b0ed16eff5283c35f6ae75e98c7721/Prueba%20Cypress.mp4)
+---
+
 # Nuxt App con Hono Server y Bun
 
 Este proyecto es una aplicación **Nuxt 3** que utiliza un servidor backend con **Hono** y se ejecuta con **Bun**. Incluye dependencias como **Pinia**, **TailwindCSS**, **MySQL2**, **Sequelize** y más.
@@ -106,9 +113,5 @@ Además, es necesario implementar:
 
 ---
 
-## Documentación y Video de Prueba
 
-- [Documentos con los escenarios de pruebas y Jest](https://github.com/kewlis/gd-qa-evaluation/blob/c5fe9c67a9b0ed16eff5283c35f6ae75e98c7721/Pruebas%20Jest%20-%20Escenarios.docx) 
-
-- [Video de la prueba Cypress](https://github.com/kewlis/gd-qa-evaluation/blob/c5fe9c67a9b0ed16eff5283c35f6ae75e98c7721/Prueba%20Cypress.mp4)
 
