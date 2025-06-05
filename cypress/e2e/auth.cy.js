@@ -1,5 +1,4 @@
 describe('Pruebas de autenticación y perfil', () => {
-  // Datos para usuario dinámico e inválido
   const dynamicUser = {
     username: 'testuser_' + Date.now(),
     email: 'testuser_' + Date.now() + '@example.com',
@@ -18,13 +17,8 @@ describe('Pruebas de autenticación y perfil', () => {
     cy.get('input[name="username"]').clear().type(dynamicUser.username)
     cy.get('input[name="email"]').clear().type(dynamicUser.email)
     cy.get('input[name="password"]').clear().type(dynamicUser.password)
-
     cy.contains('Create account').click()
-
-    // Verificamos que aparezca el mensaje de registro exitoso
     cy.contains('¡Registro exitoso!', { timeout: 10000 }).should('be.visible')
-
-    // Verificamos que la URL no contenga /signup, es decir, se redirigió
     cy.url({ timeout: 10000 }).should(url => {
       expect(url).not.to.include('/signup')
     })
@@ -36,13 +30,8 @@ describe('Pruebas de autenticación y perfil', () => {
 
     cy.get('input[name="email"]').type(invalidUser.email)
     cy.get('input[name="password"]').type(invalidUser.password)
-
     cy.contains('Continue').click()
-
-    // Verificamos que siga en la página de login
     cy.url().should('include', '/login')
-
-    // Verificamos que se muestre el mensaje de error de login
     cy.contains('Error al iniciar sesión', { timeout: 10000 }).should('be.visible')
   })
 })
