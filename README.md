@@ -3,6 +3,7 @@
 - [Documentos con los escenarios de pruebas y Jest](https://github.com/kewlis/gd-qa-evaluation/blob/c5fe9c67a9b0ed16eff5283c35f6ae75e98c7721/Pruebas%20Jest%20-%20Escenarios.docx) 
 
 - [Video de la prueba Cypress](https://github.com/kewlis/gd-qa-evaluation/blob/c5fe9c67a9b0ed16eff5283c35f6ae75e98c7721/Prueba%20Cypress.mp4)
+- Ruta - cypress\e2e\auth.cy
 ---
 
 # Nuxt App con Hono Server y Bun
