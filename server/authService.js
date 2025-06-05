@@ -57,7 +57,6 @@ async function changePassword({ userId, oldPassword, newPassword }) {
 
 // 5. Cerrar sesión (simulación)
 async function logoutUser() {
-  // En sistemas reales invalidar token, aquí solo simulamos
   return { success: true };
 }
 
